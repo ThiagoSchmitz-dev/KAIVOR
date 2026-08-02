@@ -1,251 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="KAIVOR creates Brazilian hypercars engineered for precision, performance and unforgettable emotion.">
+    <meta name="theme-color" content="#111111">
     <title>KAIVOR | The Future Runs Here</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="css/style.css">
-
+    <script src="js/script.js" defer></script>
 </head>
-
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header class="hero">
+    <header class="hero" id="home">
+        <nav class="navbar" aria-label="Primary navigation">
+            <a class="logo" href="#home" aria-label="KAIVOR home">
+                <img src="img/logo.kaivor-192.png" width="48" height="48" alt="">
+                <span>KAIVOR</span>
+            </a>
 
-        <nav class="navbar">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+                <span class="sr-only">Open navigation menu</span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
 
-           <div class="logo">
-
-    <img src="img/logo.kaivor.png" alt="KAIVOR Logo">
-
-    <h1>KAIVOR</h1>
-
-</div>
-            <ul class="menu">
-
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Legacy</a></li>
-                <li><a href="#">Models</a></li>
-                <li><a href="#">Technology</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Contact</a></li>
-
+            <ul class="menu" id="primary-menu">
+                <li><a href="#home" aria-current="page">Home</a></li>
+                <li><a href="#legacy">Legacy</a></li>
+                <li><a href="#models">Models</a></li>
+                <li><a href="#technology">Technology</a></li>
             </ul>
-
         </nav>
 
         <div class="hero-content">
-
-            <span>BRAZILIAN HYPERCARS</span>
-
-            <h2>THE FUTURE<br>RUNS HERE</h2>
-
-            <p>
-                Crafted in Brazil.<br>
-                Engineered for the World.
-            </p>
-
+            <p class="eyebrow">Brazilian Hypercars</p>
+            <h1>The Future<br>Runs Here</h1>
+            <p class="hero-description">Crafted in Brazil.<br>Engineered for the World.</p>
             <div class="hero-buttons">
-
-    <button class="btn-primary">
-
-        DISCOVER
-
-    </button>
-
-</div>
-
+                <a class="btn btn-primary" href="#apex">Discover</a>
+            </div>
         </div>
-
     </header>
-    <section class="legacy-container">
 
-    <div class="legacy-container">
+    <main id="main-content">
+        <section class="legacy reveal" id="legacy" aria-labelledby="legacy-title">
+            <div class="legacy-content">
+                <p class="eyebrow">Our Legacy</p>
+                <h2 id="legacy-title">We Don't Build Cars.<br>We Engineer Emotions.</h2>
+                <p>
+                    Every KAIVOR is born from the pursuit of perfection. Our engineers combine technology,
+                    performance and design to create machines that go beyond transportation. They create
+                    unforgettable experiences.
+                </p>
+            </div>
+        </section>
 
-        <span>OUR LEGACY</span>
+        <div class="divider" aria-label="Engineered in Brazil">
+            <img src="img/logo.kaivor-192.png" width="120" height="120" alt="">
+            <span>Engineered in Brazil</span>
+        </div>
 
-        <h2>
-            WE DON'T BUILD CARS.
-            <br>
-            WE ENGINEER EMOTIONS.
-        </h2>
-
-        <p>
-            Every KAIVOR is born from the pursuit of perfection.
-            Our engineers combine technology, performance and design
-            to create machines that go beyond transportation.
-            They create unforgettable experiences.
-        </p>
-
-    </div>
-
-</section>
-<div class="divider">
-<img src="img/logo.png" class="hero-logo" alt="">
-    <span>ENGINEERED IN BRAZIL</span>
-
-</div>
-<section class="featured reveal">
-
-    <div class="featured-image">
-
-        <img src="img/carroluxo.avif" alt="KAIVOR Apex">
-    </div>
-
-    <div class="featured-content">
-
-        <span>FEATURED HYPERCAR</span>
-
-        <h2>KAIVOR APEX</h2>
-
-        <p>
-
-            Designed for drivers who demand absolute precision,
-            the Apex combines lightweight engineering, extreme
-            aerodynamics and breathtaking performance.
-
-        </p>
-
-        <div class="specs">
-
-            <div class="spec">
-
-               <h3 class="counter" data-target="1180">0</h3>
-
-                <p>HORSEPOWER</p>
-
+        <section class="featured reveal" id="apex" aria-labelledby="apex-title">
+            <div class="featured-image">
+                <img src="img/carroluxo.avif" alt="KAIVOR Apex hypercar in profile" loading="lazy" decoding="async">
             </div>
 
-            <div class="spec">
+            <div class="featured-content">
+                <p class="eyebrow">Featured Hypercar</p>
+                <h2 id="apex-title">KAIVOR Apex</h2>
+                <p>
+                    Designed for drivers who demand absolute precision, the Apex combines lightweight engineering,
+                    extreme aerodynamics and breathtaking performance.
+                </p>
 
-                <h3 class="counter" data-target="412">0</h3>
+                <div class="specs" aria-label="KAIVOR Apex specifications">
+                    <div class="spec">
+                        <p class="spec-value counter" data-target="1180">0</p>
+                        <p>Horsepower</p>
+                    </div>
+                    <div class="spec">
+                        <p class="spec-value counter" data-target="412">0</p>
+                        <p>KM/H</p>
+                    </div>
+                    <div class="spec">
+                        <p class="spec-value counter-decimal" data-target="2.3">0.0</p>
+                        <p>0–100 KM/H</p>
+                    </div>
+                </div>
 
-                <p>KM/H</p>
+                <a class="btn model-btn" href="#models">Explore Model</a>
+            </div>
+        </section>
 
+        <section class="performance reveal" id="technology" aria-labelledby="performance-title">
+            <div class="performance-title">
+                <p class="eyebrow">Performance</p>
+                <h2 id="performance-title">Engineered to Dominate</h2>
             </div>
 
-            <div class="spec">
+            <div class="performance-grid">
+                <article class="performance-card">
+                    <h3>1180 HP</h3>
+                    <p>Twin Turbo Hybrid Powertrain</p>
+                </article>
+                <article class="performance-card">
+                    <h3>412 KM/H</h3>
+                    <p>Electronically Optimized Top Speed</p>
+                </article>
+                <article class="performance-card">
+                    <h3>2.3 s</h3>
+                    <p>0–100 km/h Launch Control</p>
+                </article>
+            </div>
+        </section>
 
-                <h3 class="counter-decimal" data-target="2.3">0.0</h3>
-
-                <p>0-100 KM/H</p>
-
+        <section class="models reveal" id="models" aria-labelledby="models-title">
+            <div class="section-title">
+                <p class="eyebrow">Our Collection</p>
+                <h2 id="models-title">KAIVOR Models</h2>
             </div>
 
-        </div>
+            <div class="models-grid">
+                <article class="model-card">
+                    <img src="img/carroluxo4.jpg" width="1920" height="1080" alt="KAIVOR Apex hybrid hypercar" loading="lazy" decoding="async">
+                    <h3>KAIVOR Apex</h3>
+                    <p>1180 HP • Hybrid Hypercar</p>
+                    <a class="model-link" href="#apex">Explore</a>
+                </article>
+                <article class="model-card">
+                    <img src="img/carroluxo3.jpg" width="344" height="180" alt="KAIVOR Vega grand touring car" loading="lazy" decoding="async">
+                    <h3>KAIVOR Vega</h3>
+                    <p>950 HP • Grand Touring</p>
+                    <a class="model-link" href="#apex">Explore</a>
+                </article>
+                <article class="model-card">
+                    <img src="img/carroluxo-2.avif" alt="KAIVOR Nova electric performance car" loading="lazy" decoding="async">
+                    <h3>KAIVOR Nova</h3>
+                    <p>840 HP • Electric Performance</p>
+                    <a class="model-link" href="#apex">Explore</a>
+                </article>
+            </div>
+        </section>
+    </main>
 
-        <button class="model-btn">
-
-            EXPLORE MODEL
-
-        </button>
-
-    </div>
-
-</section>
-<section class="performance reveal">
-
-    <div class="performance-title">
-
-        <span>PERFORMANCE</span>
-
-        <h2>ENGINEERED TO DOMINATE</h2>
-
-    </div>
-
-    <div class="performance-grid">
-
-        <div class="performance-card">
-
-            <h3>1180 HP</h3>
-
-            <p>Twin Turbo Hybrid Powertrain</p>
-
-        </div>
-
-        <div class="performance-card">
-
-            <h3>412 KM/H</h3>
-
-            <p>Electronically Optimized Top Speed</p>
-
-        </div>
-
-        <div class="performance-card">
-
-            <h3>2.3 s</h3>
-
-            <p>0–100 km/h Launch Control</p>
-
-        </div>
-
-    </div>
-
-</section>
-<section class="models reveal">
-
-    <div class="section-title">
-
-        <span>OUR COLLECTION</span>
-
-        <h2>KAIVOR MODELS</h2>
-
-    </div>
-
-    <div class="models-grid">
-
-        <div class="model-card">
-
-            <img src="img/carroluxo4.jpg">
-
-            <h3>KAIVOR APEX</h3>
-
-            <p>1180 HP • Hybrid Hypercar</p>
-
-            <button>EXPLORE</button>
-
-        </div>
-
-        <div class="model-card">
-
-            <img src="img/carroluxo3.jpg">
-
-            <h3>KAIVOR VEGA</h3>
-
-            <p>950 HP • Grand Touring</p>
-
-            <button>EXPLORE</button>
-
-        </div>
-
-        <div class="model-card">
-
-            <img src="img/carroluxo-2.avif">
-
-            <h3>KAIVOR NOVA</h3>
-
-            <p>840 HP • Electric Performance</p>
-
-            <button>EXPLORE</button>
-
-        </div>
-
-    </div>
-
-</section>
-    <script src="js/script.js"></script>
-<div class="cursor"></div>
+    <div class="cursor" aria-hidden="true"></div>
 </body>
-
 </html>

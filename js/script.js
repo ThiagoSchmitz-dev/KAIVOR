@@ -1,177 +1,151 @@
-/* ==========================================
-   KAIVOR | SCRIPT.JS
-========================================== */
+/* KAIVOR | interface enhancements */
+(() => {
+    const root = document.documentElement;
+    const navbar = document.querySelector(".navbar");
+    const navToggle = document.querySelector(".nav-toggle");
+    const menu = document.querySelector(".menu");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ========= REVEAL ========= */
+    root.classList.add("js");
 
-const revealElements = document.querySelectorAll(".reveal");
+    const setMenuState = (isOpen) => {
+        if (!navbar || !navToggle) return;
 
-const revealOnScroll = () => {
+        navbar.classList.toggle("menu-open", isOpen);
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+    };
 
-    const trigger = window.innerHeight * 0.85;
-
-    revealElements.forEach(section => {
-
-        const top = section.getBoundingClientRect().top;
-
-        if(top < trigger){
-
-            section.classList.add("active");
-
-        }
-
-    });
-
-};
-
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll();
-
-
-/* ========= CONTADORES ========= */
-
-const counters = document.querySelectorAll(".counter");
-const decimalCounters = document.querySelectorAll(".counter-decimal");
-
-function animateCounters(){
-
-    counters.forEach(counter => {
-
-        const target = Number(counter.dataset.target);
-
-        let current = 0;
-
-        const increment = target / 120;
-
-        function update(){
-
-            current += increment;
-
-            if(current < target){
-
-                counter.innerText = Math.floor(current);
-
-                requestAnimationFrame(update);
-
-            }else{
-
-                counter.innerText = target;
-
-            }
-
-        }
-
-        update();
-
-    });
-
-    decimalCounters.forEach(counter => {
-
-        const target = parseFloat(counter.dataset.target);
-
-        let current = 0;
-
-        const increment = target / 100;
-
-        function update(){
-
-            current += increment;
-
-            if(current < target){
-
-                counter.innerText = current.toFixed(1);
-
-                requestAnimationFrame(update);
-
-            }else{
-
-                counter.innerText = target.toFixed(1);
-
-            }
-
-        }
-
-        update();
-
-    });
-
-}
-
-const featured = document.querySelector(".featured");
-
-if(featured){
-
-    const counterObserver = new IntersectionObserver(entries => {
-
-        entries.forEach(entry => {
-
-            if(entry.isIntersecting){
-
-                animateCounters();
-
-                counterObserver.disconnect();
-
-            }
-
+    if (navToggle && menu) {
+        navToggle.addEventListener("click", () => {
+            setMenuState(!navbar.classList.contains("menu-open"));
         });
 
-    });
+        menu.addEventListener("click", (event) => {
+            if (event.target.closest("a")) setMenuState(false);
+        });
 
-    counterObserver.observe(featured);
-
-}
-
-
-/* ========= NAVBAR ========= */
-
-const navbar = document.querySelector(".navbar");
-
-window.addEventListener("scroll", () => {
-
-    if(window.scrollY > 80){
-
-        navbar.classList.add("scrolled");
-
-    }else{
-
-        navbar.classList.remove("scrolled");
-
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") setMenuState(false);
+        });
     }
 
-});
+    if (navbar) {
+        let scrolling = false;
 
+        const updateNavbar = () => {
+            navbar.classList.toggle("scrolled", window.scrollY > 80);
+            scrolling = false;
+        };
 
-/* ========= CURSOR ========= */
+        window.addEventListener("scroll", () => {
+            if (!scrolling) {
+                window.requestAnimationFrame(updateNavbar);
+                scrolling = true;
+            }
+        }, { passive: true });
 
-const cursor = document.querySelector(".cursor");
+        updateNavbar();
+    }
 
-if(cursor){
+    const revealElements = document.querySelectorAll(".reveal");
 
-    document.addEventListener("mousemove", e => {
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+        revealElements.forEach((element) => element.classList.add("active"));
+    } else {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: "0px 0px -8%" });
 
-        cursor.style.left = e.clientX + "px";
+        revealElements.forEach((element) => revealObserver.observe(element));
+    }
 
-        cursor.style.top = e.clientY + "px";
+    const animateValue = (element, decimal = false) => {
+        const target = Number(element.dataset.target);
+        const duration = 900;
+        const start = performance.now();
 
-    });
+        const update = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const value = target * progress;
+            element.textContent = decimal ? value.toFixed(1) : Math.floor(value).toString();
 
-}
+            if (progress < 1) {
+                window.requestAnimationFrame(update);
+            } else {
+                element.textContent = decimal ? target.toFixed(1) : target.toString();
+            }
+        };
 
+        window.requestAnimationFrame(update);
+    };
 
-/* ========= HERO PARALLAX ========= */
+    const featured = document.querySelector(".featured");
+    const counters = document.querySelectorAll(".counter");
+    const decimalCounters = document.querySelectorAll(".counter-decimal");
+    let countersStarted = false;
 
-const hero = document.querySelector(".hero-content");
+    const startCounters = () => {
+        if (countersStarted) return;
+        countersStarted = true;
 
-if(hero){
+        if (reducedMotion) {
+            counters.forEach((counter) => { counter.textContent = counter.dataset.target; });
+            decimalCounters.forEach((counter) => { counter.textContent = Number(counter.dataset.target).toFixed(1); });
+            return;
+        }
 
-    document.addEventListener("mousemove", e => {
+        counters.forEach((counter) => animateValue(counter));
+        decimalCounters.forEach((counter) => animateValue(counter, true));
+    };
 
-        const x = (e.clientX / window.innerWidth - 0.5) * 25;
+    if (featured && "IntersectionObserver" in window) {
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            if (entries.some((entry) => entry.isIntersecting)) {
+                startCounters();
+                observer.disconnect();
+            }
+        }, { threshold: 0.25 });
 
-        const y = (e.clientY / window.innerHeight - 0.5) * 25;
+        counterObserver.observe(featured);
+    } else {
+        startCounters();
+    }
 
-        hero.style.transform = `translate(${x}px, ${y}px)`;
+    const supportsPointerEffects = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const cursor = document.querySelector(".cursor");
+    const heroContent = document.querySelector(".hero-content");
 
-    });
+    if (supportsPointerEffects && !reducedMotion) {
+        root.classList.add("has-custom-cursor");
+        let pointerX = 0;
+        let pointerY = 0;
+        let pointerFrame = 0;
 
-}
+        const renderPointerEffects = () => {
+            if (cursor) {
+                cursor.style.left = `${pointerX}px`;
+                cursor.style.top = `${pointerY}px`;
+            }
+
+            if (heroContent) {
+                const x = (pointerX / window.innerWidth - 0.5) * 18;
+                const y = (pointerY / window.innerHeight - 0.5) * 18;
+                heroContent.style.transform = `translate(${x}px, ${y}px)`;
+            }
+
+            pointerFrame = 0;
+        };
+
+        document.addEventListener("pointermove", (event) => {
+            pointerX = event.clientX;
+            pointerY = event.clientY;
+
+            if (!pointerFrame) pointerFrame = window.requestAnimationFrame(renderPointerEffects);
+        }, { passive: true });
+    }
+})();

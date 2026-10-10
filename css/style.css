@@ -368,7 +368,7 @@ h3 {
 
 .featured-image img {
     width: 100%;
-    border-radius: 30%;
+    border-radius: 15%;
     max-width: 43.75rem;
     margin-inline: auto;
     object-fit: contain;
